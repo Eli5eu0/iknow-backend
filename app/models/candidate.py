@@ -3,7 +3,7 @@ from __future__ import annotations
 import uuid
 from datetime import datetime
 
-from sqlalchemy import DateTime, ForeignKey, String, Text, UniqueConstraint, func
+from sqlalchemy import DateTime, ForeignKey, String, Text, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.types import Uuid
 
@@ -29,15 +29,14 @@ class CandidateProfile(Base):
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
     )
 
-    user: Mapped[User] = relationship(back_populates="candidate_profile")
+    user: Mapped[User] = relationship("User", back_populates="candidate_profile")
     skills: Mapped[list[CandidateSkill]] = relationship(
-        back_populates="candidate_profile", cascade="all, delete-orphan"
+        "CandidateSkill", back_populates="candidate_profile", cascade="all, delete-orphan"
     )
 
 
 class CandidateSkill(Base):
     __tablename__ = "candidate_skills"
-    __table_args__ = (UniqueConstraint("candidate_profile_id", "skill_id", name="uq_candidate_skill"),)
 
     candidate_profile_id: Mapped[uuid.UUID] = mapped_column(
         Uuid(as_uuid=True), ForeignKey("candidate_profiles.id", ondelete="CASCADE"), primary_key=True
@@ -48,5 +47,7 @@ class CandidateSkill(Base):
     proficiency: Mapped[str | None] = mapped_column(String(30))
     years_experience: Mapped[float | None] = mapped_column(nullable=True)
 
-    candidate_profile: Mapped[CandidateProfile] = relationship(back_populates="skills")
-    skill: Mapped[Skill] = relationship(back_populates="candidate_links")
+    candidate_profile: Mapped[CandidateProfile] = relationship(
+        "CandidateProfile", back_populates="skills"
+    )
+    skill: Mapped[Skill] = relationship("Skill", back_populates="candidate_links")
