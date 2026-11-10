@@ -5,9 +5,11 @@ from sqlalchemy import engine_from_config, pool
 
 from app.core.config import settings
 from app.db.base import Base
+import app.models  # noqa: F401 - regista todos os modelos no metadata
 
 config = context.config
-config.set_main_option("sqlalchemy.url", settings.database_url)
+# Escapa '%' para evitar interpolação do ConfigParser em URLs com passwords especiais.
+config.set_main_option("sqlalchemy.url", settings.database_url.replace("%", "%%"))
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
