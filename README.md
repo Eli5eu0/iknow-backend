@@ -7,7 +7,15 @@ Backend da plataforma **iKnow**, construído com FastAPI, PostgreSQL, SQLAlchemy
 - Docker Desktop (com Docker Compose) ou Docker Engine + Compose
 - Git
 
-## 1. Iniciar PostgreSQL
+## 1. Configurar o ambiente
+
+```bash
+cp .env.example .env
+```
+
+O ficheiro `.env` contém credenciais exclusivamente locais para desenvolvimento. Altere-as se a porta, utilizador ou password já estiverem em uso. Nunca use estes valores em produção.
+
+## 2. Iniciar PostgreSQL
 
 Na raiz do repositório:
 
@@ -16,7 +24,7 @@ docker compose up -d db
 docker compose ps
 ```
 
-O serviço usa PostgreSQL 16, expõe a porta 5432 e guarda os dados num volume Docker persistente.
+O serviço usa PostgreSQL 16, expõe a porta 5432 e guarda os dados num volume Docker persistente. O Docker Compose lê as variáveis definidas no ficheiro `.env`.
 
 Para acompanhar a inicialização:
 
@@ -24,18 +32,15 @@ Para acompanhar a inicialização:
 docker compose logs -f db
 ```
 
-## 2. Configurar o backend
+Depois configure o backend:
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env
 ```
 
 No Windows PowerShell, active o ambiente com `.venv\\Scripts\\Activate.ps1`.
-
-O `.env.example` contém credenciais exclusivamente locais para desenvolvimento. Altere-as se a porta, utilizador ou password já estiverem em uso. Nunca use estes valores em produção.
 
 ## 3. Executar a API
 
