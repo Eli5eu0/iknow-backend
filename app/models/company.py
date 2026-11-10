@@ -43,7 +43,7 @@ class Company(Base):
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
     )
 
-    user: Mapped[User] = relationship(back_populates="company")
+    user: Mapped[User] = relationship("User", back_populates="company")
     opportunities: Mapped[list[Opportunity]] = relationship(
-        back_populates="company", cascade="all, delete-orphan"
+        "Opportunity", back_populates="company", cascade="all, delete-orphan"
     )
