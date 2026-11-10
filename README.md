@@ -1,13 +1,31 @@
 # iKnow Backend
 
-Backend inicial da plataforma **iKnow**, construído com FastAPI, PostgreSQL, SQLAlchemy 2.0 e Alembic.
+Backend da plataforma **iKnow**, construído com FastAPI, PostgreSQL, SQLAlchemy 2.0 e Alembic.
 
 ## Requisitos
 - Python 3.11+
-- PostgreSQL 15+
+- Docker Desktop (com Docker Compose) ou Docker Engine + Compose
 - Git
 
-## Configuração local
+## 1. Iniciar PostgreSQL
+
+Na raiz do repositório:
+
+```bash
+docker compose up -d db
+docker compose ps
+```
+
+O serviço usa PostgreSQL 16, expõe a porta 5432 e guarda os dados num volume Docker persistente.
+
+Para acompanhar a inicialização:
+
+```bash
+docker compose logs -f db
+```
+
+## 2. Configurar o backend
+
 ```bash
 python -m venv .venv
 source .venv/bin/activate
@@ -15,34 +33,57 @@ pip install -r requirements.txt
 cp .env.example .env
 ```
 
-Edite `.env` e configure a ligação PostgreSQL. Depois execute:
+No Windows PowerShell, active o ambiente com `.venv\\Scripts\\Activate.ps1`.
+
+O `.env.example` contém credenciais exclusivamente locais para desenvolvimento. Altere-as se a porta, utilizador ou password já estiverem em uso. Nunca use estes valores em produção.
+
+## 3. Executar a API
+
 ```bash
-alembic upgrade head
 uvicorn app.main:app --reload
 ```
 
-## Endpoints
-- `GET /api/v1/health` — estado da API e ligação à base de dados.
+Endpoints:
+- `GET /api/v1/health` — verifica a ligação à base de dados.
 - `GET /docs` — Swagger UI.
 - `GET /redoc` — ReDoc.
 - `GET /openapi.json` — contrato OpenAPI.
 
-## Testes
+A verificação de saúde deve responder com `{"status":"ok","database":"ok"}` quando a API consegue executar uma consulta à base de dados.
+
+## 4. Testes
+
 ```bash
 pytest
 ```
-Os testes usam SQLite em memória e não exigem PostgreSQL.
+
+Os testes usam SQLite em memória e não exigem que o PostgreSQL esteja activo.
+
+## Parar a base de dados
+
+```bash
+docker compose down
+```
+
+Para apagar também os dados persistidos (operação irreversível):
+
+```bash
+docker compose down -v
+```
 
 ## Estrutura
+
 ```text
 app/
   api/v1/endpoints/
   core/
   db/
-tests/
 alembic/
+  versions/
+tests/
+docker-compose.yml
 ```
 
-Esta é apenas a fundação técnica. Autenticação, perfis, empresas, oportunidades, candidaturas e correspondência serão implementados em etapas próprias, de acordo com as decisões de arquitectura aprovadas.
+Esta etapa prepara o PostgreSQL local e a ligação da aplicação. A criação dos modelos de domínio e da primeira migração será a etapa seguinte. Autenticação, perfis, empresas, oportunidades, candidaturas e correspondência serão implementados progressivamente, seguindo as decisões de arquitectura aprovadas.
 
 Não guardar segredos no repositório. O ficheiro `.env` é local; apenas `.env.example` deve ser versionado.
