@@ -22,9 +22,7 @@ class User(Base):
     id: Mapped[uuid.UUID] = mapped_column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
     email: Mapped[str] = mapped_column(String(320), unique=True, index=True, nullable=False)
     password_hash: Mapped[str] = mapped_column(String(255), nullable=False)
-    role: Mapped[UserRole] = mapped_column(
-        Enum(UserRole, native_enum=False, length=20), nullable=False
-    )
+    role: Mapped[UserRole] = mapped_column(Enum(UserRole, native_enum=False, length=20), nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(
@@ -32,13 +30,13 @@ class User(Base):
     )
 
     refresh_tokens: Mapped[list[RefreshToken]] = relationship(
-        back_populates="user", cascade="all, delete-orphan"
+        "RefreshToken", back_populates="user", cascade="all, delete-orphan"
     )
     candidate_profile: Mapped[CandidateProfile | None] = relationship(
-        back_populates="user", uselist=False, cascade="all, delete-orphan"
+        "CandidateProfile", back_populates="user", uselist=False, cascade="all, delete-orphan"
     )
     company: Mapped[Company | None] = relationship(
-        back_populates="user", uselist=False, cascade="all, delete-orphan"
+        "Company", back_populates="user", uselist=False, cascade="all, delete-orphan"
     )
 
 
@@ -58,4 +56,4 @@ class RefreshToken(Base):
     )
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
-    user: Mapped[User] = relationship(back_populates="refresh_tokens")
+    user: Mapped[User] = relationship("User", back_populates="refresh_tokens")
