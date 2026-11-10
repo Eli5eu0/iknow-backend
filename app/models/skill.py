@@ -17,5 +17,9 @@ class Skill(Base):
     slug: Mapped[str] = mapped_column(String(120), unique=True, nullable=False, index=True)
     category: Mapped[str | None] = mapped_column(String(80))
 
-    candidate_links: Mapped[list[CandidateSkill]] = relationship(back_populates="skill")
-    opportunity_links: Mapped[list[OpportunitySkill]] = relationship(back_populates="skill")
+    candidate_links: Mapped[list[CandidateSkill]] = relationship(
+        "CandidateSkill", back_populates="skill"
+    )
+    opportunity_links: Mapped[list[OpportunitySkill]] = relationship(
+        "OpportunitySkill", back_populates="skill"
+    )
