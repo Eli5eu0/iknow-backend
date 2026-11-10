@@ -39,9 +39,9 @@ class Opportunity(Base):
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
     )
 
-    company: Mapped[Company] = relationship(back_populates="opportunities")
+    company: Mapped[Company] = relationship("Company", back_populates="opportunities")
     skills: Mapped[list[OpportunitySkill]] = relationship(
-        back_populates="opportunity", cascade="all, delete-orphan"
+        "OpportunitySkill", back_populates="opportunity", cascade="all, delete-orphan"
     )
 
 
@@ -56,5 +56,5 @@ class OpportunitySkill(Base):
     )
     is_mandatory: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
 
-    opportunity: Mapped[Opportunity] = relationship(back_populates="skills")
-    skill: Mapped[Skill] = relationship(back_populates="opportunity_links")
+    opportunity: Mapped[Opportunity] = relationship("Opportunity", back_populates="skills")
+    skill: Mapped[Skill] = relationship("Skill", back_populates="opportunity_links")
