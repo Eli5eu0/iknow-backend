@@ -23,10 +23,9 @@ class CandidateProfile(Base):
     summary: Mapped[str | None] = mapped_column(Text)
     city: Mapped[str | None] = mapped_column(String(100))
     country: Mapped[str | None] = mapped_column(String(100))
-    availability: Mapped[str | None] = mapped_column(String(40))
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), nullable=False
-    )
+    availability: Mapped[str | None] = mapped_column(String(255))
+    is_public: Mapped[bool] = mapped_column(default=True, nullable=False, server_default="true")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False
     )
@@ -50,6 +49,10 @@ class CandidateSkill(Base):
             "years_experience IS NULL OR years_experience >= 0",
             name="ck_candidate_skills_years_experience_nonnegative",
         ),
+        CheckConstraint(
+            "proficiency IS NULL OR proficiency IN ('BEGINNER', 'INTERMEDIATE', 'ADVANCED', 'EXPERT')",
+            name="ck_candidate_skills_proficiency",
+        ),
         Index("ix_candidate_skills_skill_id", "skill_id"),
     )
 
@@ -62,7 +65,5 @@ class CandidateSkill(Base):
     proficiency: Mapped[str | None] = mapped_column(String(30))
     years_experience: Mapped[float | None] = mapped_column(Float, nullable=True)
 
-    candidate_profile: Mapped[CandidateProfile] = relationship(
-        "CandidateProfile", back_populates="skills"
-    )
+    candidate_profile: Mapped[CandidateProfile] = relationship("CandidateProfile", back_populates="skills")
     skill: Mapped["Skill"] = relationship("Skill", back_populates="candidate_links")
