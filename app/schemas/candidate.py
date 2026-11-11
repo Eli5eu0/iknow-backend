@@ -103,6 +103,12 @@ class ExperienceUpdate(BaseModel):
     is_current: bool | None = None
 
     @model_validator(mode="after")
+    def validate_required_fields(self):
+        if self.company_name is None or self.job_title is None or self.start_date is None:
+            raise ValueError("company_name, job_title and start_date cannot be null")
+        return self
+
+    @model_validator(mode="after")
     def validate_dates(self):
         if self.start_date and self.end_date and self.end_date < self.start_date:
             raise ValueError("end_date must be on or after start_date")
@@ -153,6 +159,12 @@ class EducationUpdate(BaseModel):
     start_date: date | None = None
     end_date: date | None = None
     is_current: bool | None = None
+
+    @model_validator(mode="after")
+    def validate_required_fields(self):
+        if self.institution is None or self.start_date is None:
+            raise ValueError("institution and start_date cannot be null")
+        return self
 
     @model_validator(mode="after")
     def validate_dates(self):
