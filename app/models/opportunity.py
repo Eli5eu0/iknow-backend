@@ -29,18 +29,26 @@ class Opportunity(Base):
     city: Mapped[str | None] = mapped_column(String(100))
     country: Mapped[str | None] = mapped_column(String(100))
     status: Mapped[OpportunityStatus] = mapped_column(
-        Enum(OpportunityStatus, native_enum=False, length=16),
+        Enum(
+            OpportunityStatus,
+            native_enum=False,
+            create_constraint=True,
+            length=16,
+            name="opportunitystatus",
+        ),
         default=OpportunityStatus.DRAFT,
         nullable=False,
         index=True,
     )
-    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
     updated_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
+        DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False
     )
 
-    company: Mapped[Company] = relationship("Company", back_populates="opportunities")
-    skills: Mapped[list[OpportunitySkill]] = relationship(
+    company: Mapped["Company"] = relationship("Company", back_populates="opportunities")
+    skills: Mapped[list["OpportunitySkill"]] = relationship(
         "OpportunitySkill", back_populates="opportunity", cascade="all, delete-orphan"
     )
 
@@ -57,4 +65,4 @@ class OpportunitySkill(Base):
     is_mandatory: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
 
     opportunity: Mapped[Opportunity] = relationship("Opportunity", back_populates="skills")
-    skill: Mapped[Skill] = relationship("Skill", back_populates="opportunity_links")
+    skill: Mapped["Skill"] = relationship("Skill", back_populates="opportunity_links")

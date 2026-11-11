@@ -34,16 +34,24 @@ class Company(Base):
     city: Mapped[str | None] = mapped_column(String(100))
     country: Mapped[str | None] = mapped_column(String(100))
     verification_status: Mapped[CompanyVerificationStatus] = mapped_column(
-        Enum(CompanyVerificationStatus, native_enum=False, length=24),
+        Enum(
+            CompanyVerificationStatus,
+            native_enum=False,
+            create_constraint=True,
+            length=24,
+            name="companyverificationstatus",
+        ),
         default=CompanyVerificationStatus.NOT_SUBMITTED,
         nullable=False,
     )
-    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
     updated_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
+        DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False
     )
 
-    user: Mapped[User] = relationship("User", back_populates="company")
-    opportunities: Mapped[list[Opportunity]] = relationship(
+    user: Mapped["User"] = relationship("User", back_populates="company")
+    opportunities: Mapped[list["Opportunity"]] = relationship(
         "Opportunity", back_populates="company", cascade="all, delete-orphan"
     )
