@@ -140,3 +140,13 @@ def test_auth_endpoints_reject_untrusted_origin(client):
 def test_me_requires_bearer_token(client):
     response = client.get("/api/v1/auth/me")
     assert response.status_code == 401
+
+
+def test_csrf_endpoint_returns_stable_token_for_existing_session(client):
+    registered = _register(client)
+    original_csrf = registered.json()["csrf_token"]
+
+    response = client.get("/api/v1/auth/csrf", headers={"Origin": ORIGIN})
+
+    assert response.status_code == 200
+    assert response.json()["csrf_token"] == original_csrf
