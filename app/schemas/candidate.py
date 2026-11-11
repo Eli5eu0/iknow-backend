@@ -102,11 +102,14 @@ class ExperienceUpdate(BaseModel):
     end_date: date | None = None
     is_current: bool | None = None
 
-    @model_validator(mode="after")
-    def validate_required_fields(self):
-        if self.company_name is None or self.job_title is None or self.start_date is None:
-            raise ValueError("company_name, job_title and start_date cannot be null")
-        return self
+    @model_validator(mode="before")
+    @classmethod
+    def reject_null_required_fields(cls, value):
+        if isinstance(value, dict):
+            for field in ("company_name", "job_title", "start_date"):
+                if field in value and value[field] is None:
+                    raise ValueError(f"{field} cannot be null")
+        return value
 
     @model_validator(mode="after")
     def validate_dates(self):
@@ -160,11 +163,14 @@ class EducationUpdate(BaseModel):
     end_date: date | None = None
     is_current: bool | None = None
 
-    @model_validator(mode="after")
-    def validate_required_fields(self):
-        if self.institution is None or self.start_date is None:
-            raise ValueError("institution and start_date cannot be null")
-        return self
+    @model_validator(mode="before")
+    @classmethod
+    def reject_null_required_fields(cls, value):
+        if isinstance(value, dict):
+            for field in ("institution", "start_date"):
+                if field in value and value[field] is None:
+                    raise ValueError(f"{field} cannot be null")
+        return value
 
     @model_validator(mode="after")
     def validate_dates(self):
