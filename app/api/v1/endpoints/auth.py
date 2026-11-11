@@ -13,7 +13,7 @@ from app.api.deps import get_current_user
 from app.core.config import settings
 from app.core.security import (
     create_access_token,
-    create_csrf_token,
+    derive_csrf_token,
     generate_opaque_token,
     hash_password,
     hash_token,
@@ -72,16 +72,17 @@ def _ensure_trusted_origin(request: Request) -> None:
 
 def _new_refresh_session(db: Session, user: User, family_id=None) -> tuple[str, str]:
     refresh_value = generate_opaque_token()
-    csrf_value = create_csrf_token()
     now = datetime.now(timezone.utc)
     token_row = RefreshToken(
         user_id=user.id,
         token_hash=hash_token(refresh_value),
-        csrf_token_hash=hash_token(csrf_value),
         family_id=family_id or uuid4(),
         expires_at=now + timedelta(days=settings.refresh_token_expire_days),
     )
     db.add(token_row)
+    db.flush()
+    csrf_value = derive_csrf_token(token_row.id)
+    token_row.csrf_token_hash = hash_token(csrf_value)
     db.flush()
     return refresh_value, csrf_value
 
@@ -177,14 +178,16 @@ def issue_csrf_token(
     if expires_at.tzinfo is None:
         expires_at = expires_at.replace(tzinfo=timezone.utc)
     if token_row.revoked_at is not None or expires_at <= now:
-        if token_row.revoked_at is not None:
+        if token_row.revoked_at is not None or expires_at <= now:
             _revoke_family(db, token_row.family_id)
             db.commit()
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Refresh session is invalid")
 
-    csrf_value = create_csrf_token()
-    token_row.csrf_token_hash = hash_token(csrf_value)
-    db.commit()
+    csrf_value = derive_csrf_token(token_row.id)
+    if not token_row.csrf_token_hash or not hmac.compare_digest(
+        hash_token(csrf_value), token_row.csrf_token_hash
+    ):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid CSRF session")
     return CsrfResponse(csrf_token=csrf_value)
 
 
