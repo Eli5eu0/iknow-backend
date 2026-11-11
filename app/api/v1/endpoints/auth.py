@@ -192,7 +192,6 @@ def issue_csrf_token(
 def refresh(
     request: Request,
     response: Response,
-    csrf_header: str | None = None,
     db: Session = Depends(get_db),
 ) -> AuthResponse:
     _ensure_trusted_origin(request)
