@@ -1,4 +1,5 @@
 import hashlib
+import hmac
 import secrets
 from datetime import datetime, timedelta, timezone
 from uuid import UUID
@@ -38,8 +39,10 @@ def hash_token(token: str) -> str:
     return hashlib.sha256(token.encode("utf-8")).hexdigest()
 
 
-def create_csrf_token() -> str:
-    return secrets.token_urlsafe(32)
+def derive_csrf_token(session_id: UUID) -> str:
+    # Stable per refresh session, so multiple browser tabs share the same CSRF token.
+    message = f"iknow-csrf:{session_id}".encode("utf-8")
+    return hmac.new(settings.jwt_secret_key.encode("utf-8"), message, hashlib.sha256).hexdigest()
 
 
 def create_access_token(user_id: UUID, role: str) -> str:
