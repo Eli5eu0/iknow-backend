@@ -14,6 +14,7 @@ from sqlalchemy import (
     Numeric,
     String,
     Text,
+    UniqueConstraint,
     func,
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -43,6 +44,11 @@ class MatchingJobStatus(str, enum.Enum):
 class Match(Base):
     __tablename__ = "matches"
     __table_args__ = (
+        UniqueConstraint(
+            "candidate_profile_id",
+            "opportunity_id",
+            name="uq_matches_candidate_opportunity",
+        ),
         CheckConstraint(
             "score IS NULL OR (score >= 0 AND score <= 100)",
             name="ck_matches_score_range",
