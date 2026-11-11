@@ -4,7 +4,15 @@ from urllib.parse import urlsplit
 from uuid import uuid4
 
 import jwt
-from fastapi import APIRouter, Depends, HTTPException, Request, Response, status
+from fastapi import (
+    APIRouter,
+    Depends,
+    Header,
+    HTTPException,
+    Request,
+    Response,
+    status,
+)
 from sqlalchemy import select, update
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
@@ -195,10 +203,10 @@ def issue_csrf_token(
 def refresh(
     request: Request,
     response: Response,
+    csrf_header: str | None = Header(default=None, alias="X-CSRF-Token"),
     db: Session = Depends(get_db),
 ) -> AuthResponse:
     _ensure_trusted_origin(request)
-    csrf_header = request.headers.get("X-CSRF-Token")
     raw_refresh = request.cookies.get(REFRESH_COOKIE_NAME)
     if not raw_refresh:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Refresh session not found")
@@ -253,6 +261,7 @@ def refresh(
 def logout(
     request: Request,
     response: Response,
+    csrf_header: str | None = Header(default=None, alias="X-CSRF-Token"),
     db: Session = Depends(get_db),
 ) -> Response:
     _ensure_trusted_origin(request)
