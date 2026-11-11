@@ -4,7 +4,7 @@ import enum
 import uuid
 from datetime import datetime
 
-from sqlalchemy import Boolean, DateTime, Enum, ForeignKey, String, func
+from sqlalchemy import Boolean, CheckConstraint, DateTime, Enum, ForeignKey, String, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.types import Uuid
 
@@ -22,20 +22,25 @@ class User(Base):
     id: Mapped[uuid.UUID] = mapped_column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
     email: Mapped[str] = mapped_column(String(320), unique=True, index=True, nullable=False)
     password_hash: Mapped[str] = mapped_column(String(255), nullable=False)
-    role: Mapped[UserRole] = mapped_column(Enum(UserRole, native_enum=False, length=20), nullable=False)
+    role: Mapped[UserRole] = mapped_column(
+        Enum(UserRole, native_enum=False, create_constraint=True, length=20, name="userrole"),
+        nullable=False,
+    )
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
-    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
     updated_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
+        DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False
     )
 
-    refresh_tokens: Mapped[list[RefreshToken]] = relationship(
+    refresh_tokens: Mapped[list["RefreshToken"]] = relationship(
         "RefreshToken", back_populates="user", cascade="all, delete-orphan"
     )
-    candidate_profile: Mapped[CandidateProfile | None] = relationship(
+    candidate_profile: Mapped["CandidateProfile | None"] = relationship(
         "CandidateProfile", back_populates="user", uselist=False, cascade="all, delete-orphan"
     )
-    company: Mapped[Company | None] = relationship(
+    company: Mapped["Company | None"] = relationship(
         "Company", back_populates="user", uselist=False, cascade="all, delete-orphan"
     )
 
@@ -54,6 +59,8 @@ class RefreshToken(Base):
     replaced_by_id: Mapped[uuid.UUID | None] = mapped_column(
         Uuid(as_uuid=True), ForeignKey("refresh_tokens.id", ondelete="SET NULL")
     )
-    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
 
     user: Mapped[User] = relationship("User", back_populates="refresh_tokens")
