@@ -7,7 +7,7 @@ CANDIDATES gere o perfil do candidato, formação académica, experiência profi
 - Todos os endpoints privados exigem role CANDIDATE.
 - O perfil pertence sempre ao utilizador autenticado; nenhum endpoint aceita user_id do cliente.
 - PUT /me cria ou atualiza o perfil de forma idempotente; PATCH /me altera apenas os campos enviados.
-- GET /me cria o perfil vazio se ainda não existir, para suportar a experiência progressiva.
+- GET /me é apenas leitura e responde 404 se o perfil ainda não existir. A criação explícita e progressiva ocorre através de PUT /me (ou de uma operação de escrita de dados do perfil).
 - Experiência profissional é opcional.
 - Disponibilidade é texto livre até 255 caracteres e não participa no critério de matching de disponibilidade enquanto não existir um formato estruturado.
 - Perfis são públicos por padrão, mas o candidato pode desativar a visibilidade.
