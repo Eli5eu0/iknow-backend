@@ -1,9 +1,9 @@
 
 """complete core domain schema
 
-Revision ID: 7748489210c3
+Revision ID: 0638ca89a4cf
 Revises: 4d8c82221c74
-Create Date: 2026-11-11 09:56:15.167772
+Create Date: 2026-11-11 10:07:32.385511
 
 """
 from typing import Sequence, Union
@@ -13,7 +13,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = "7748489210c3"
+revision: str = "0638ca89a4cf"
 down_revision: Union[str, Sequence[str], None] = '4d8c82221c74'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -106,7 +106,8 @@ def upgrade() -> None:
     sa.CheckConstraint('score IS NULL OR (score >= 0 AND score <= 100)', name='ck_matches_score_range'),
     sa.ForeignKeyConstraint(['candidate_profile_id'], ['candidate_profiles.id'], ondelete='CASCADE'),
     sa.ForeignKeyConstraint(['opportunity_id'], ['opportunities.id'], ondelete='CASCADE'),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('candidate_profile_id', 'opportunity_id', name='uq_matches_candidate_opportunity')
     )
     op.create_index('ix_matches_opportunity_score', 'matches', ['opportunity_id', 'score'], unique=False)
     op.create_table('matching_jobs',
