@@ -93,13 +93,10 @@ def test_reuse_of_revoked_refresh_token_revokes_token_family(client):
     assert rotated.status_code == 200
     new_refresh = client.cookies.get("iknow_refresh")
 
+    client.cookies.set("iknow_refresh", old_refresh, path="/api/v1/auth")
     reused = client.post(
         "/api/v1/auth/refresh",
-        headers={
-            "Origin": ORIGIN,
-            "X-CSRF-Token": old_csrf,
-            "Cookie": f"iknow_refresh={old_refresh}",
-        },
+        headers={"Origin": ORIGIN, "X-CSRF-Token": old_csrf},
     )
     assert reused.status_code == 401
 
