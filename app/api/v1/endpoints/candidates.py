@@ -26,7 +26,7 @@ candidate_only = require_roles(UserRole.CANDIDATE)
 
 @router.get("/me", response_model=CandidateProfileRead)
 def read_my_profile(user: User = Depends(candidate_only), db: Session = Depends(get_db)):
-    return get_or_create_profile(db, user)
+    return get_profile(db, user)
 
 
 @router.put("/me", response_model=CandidateProfileRead)
@@ -61,7 +61,7 @@ def update_visibility(
 
 @router.get("/me/experiences", response_model=list[ExperienceRead])
 def list_experiences(user: User = Depends(candidate_only), db: Session = Depends(get_db)):
-    profile = get_or_create_profile(db, user)
+    profile = get_profile(db, user)
     return db.scalars(
         select(CandidateExperience).where(CandidateExperience.candidate_profile_id == profile.id)
         .order_by(CandidateExperience.start_date.desc())
@@ -105,7 +105,7 @@ def delete_experience(record_id: UUID, user: User = Depends(candidate_only), db:
 
 @router.get("/me/educations", response_model=list[EducationRead])
 def list_educations(user: User = Depends(candidate_only), db: Session = Depends(get_db)):
-    profile = get_or_create_profile(db, user)
+    profile = get_profile(db, user)
     return db.scalars(
         select(CandidateEducation).where(CandidateEducation.candidate_profile_id == profile.id)
         .order_by(CandidateEducation.start_date.desc())
@@ -149,7 +149,7 @@ def delete_education(record_id: UUID, user: User = Depends(candidate_only), db: 
 
 @router.get("/me/skills", response_model=list[CandidateSkillRead])
 def list_skills(user: User = Depends(candidate_only), db: Session = Depends(get_db)):
-    profile = get_or_create_profile(db, user)
+    profile = get_profile(db, user)
     return db.scalars(
         select(CandidateSkill).where(CandidateSkill.candidate_profile_id == profile.id)
         .options(selectinload(CandidateSkill.skill)).order_by(CandidateSkill.skill_id)
