@@ -1,5 +1,3 @@
-from datetime import datetime, timezone
-
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.orm import Session
@@ -8,7 +6,6 @@ from app.api.deps import get_current_user
 from app.core.security import verify_password
 from app.db.session import get_db
 from app.models.user import User
-from app.schemas.auth import LoginRequest
 from app.schemas.user import AccountRecovery, PasswordChange, UserRead
 from app.services.user_service import change_password, recover_account, request_deactivation
 
