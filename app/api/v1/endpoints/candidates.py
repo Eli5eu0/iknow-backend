@@ -44,7 +44,11 @@ def patch_my_profile(
     user: User = Depends(candidate_only),
     db: Session = Depends(get_db),
 ):
-    return update_profile(db, user, payload.model_dump(exclude_unset=True))
+    return update_profile(
+    db,
+    user,
+    payload.model_dump(exclude_unset=True),
+)
 
 
 @router.patch("/me/visibility", response_model=CandidateProfileRead)

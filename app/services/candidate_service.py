@@ -44,15 +44,41 @@ def get_profile(db: Session, user: User) -> CandidateProfile:
     return profile
 
 
-def update_profile(db: Session, user: User, data: dict, *, create: bool = False) -> CandidateProfile:
-    profile = get_profile(db, user) if not create else None
+
+def update_profile(
+    db: Session,
+    user: User,
+    data: dict,
+    *,
+    create: bool = False,
+) -> CandidateProfile:
+    profile = db.scalar(
+        select(CandidateProfile).where(
+            CandidateProfile.user_id == user.id
+        )
+    )
+
     if profile is None:
+        if not create:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Candidate profile not found",
+            )
+
         profile = CandidateProfile(user_id=user.id)
         db.add(profile)
+
     for key, value in data.items():
         setattr(profile, key, value)
-    db.commit()
+
+    try:
+        db.commit()
+    except Exception:
+        db.rollback()
+        raise
+
     return get_profile(db, user)
+
 
 
 def owned_record(db: Session, model, record_id: UUID, profile_id: UUID):
