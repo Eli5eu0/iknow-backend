@@ -1,0 +1,571 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: CANDIDATES
+meta:
+  id: wrk_7cc876ea9a5845289fb295ff3b7fa55a
+  created: 1794406734814
+  modified: 1794406734814
+  description: ""
+collection:
+  - url: "{{ _.base_url }}/health"
+    name: Health Check
+    meta:
+      id: req_12392cd0e2194216b33b944cfd8c9315
+      created: 1794407115560
+      modified: 1794407176432
+      isPrivate: false
+      description: ""
+      sortKey: -1794407115561
+    method: GET
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.base_url }}/auth/login"
+    name: Login - Candidate A
+    meta:
+      id: req_ed6d559d8a2340a1b214babb47055428
+      created: 1794407274152
+      modified: 1794409776318
+      isPrivate: false
+      description: ""
+      sortKey: -1794407274153
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "email": "eliseu@iknow.com",
+          "password": "eliseucambinda"
+        }
+    headers:
+      - name: Origin
+        value: http://localhost:5173
+        description: ""
+        disabled: false
+      - name: Content-Type
+        value: application/json
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.base_url }}/candidates/me"
+    name: Get Candidate A Profile
+    meta:
+      id: req_afd8fa5984934d1db1fde3f66f95bd95
+      created: 1794409839995
+      modified: 1794409893251
+      isPrivate: false
+      description: ""
+      sortKey: -1794409839995
+    method: GET
+    authentication:
+      type: bearer
+      token: "{{ _.token_candidate_a }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.base_url }}/candidates/me"
+    name: Create Candidate A Profile
+    meta:
+      id: req_d26a999a9b664d0fa403905471c4986f
+      created: 1794410019553
+      modified: 1794414278248
+      isPrivate: false
+      description: ""
+      sortKey: -1794410019554
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "full_name": "Candidato de Teste A",
+          "headline": "Estudante de Tecnologias de Informação",
+          "summary": "Perfil actualizado da plataforma iKnow.",
+          "city": "Luanda",
+          "country": "Angola",
+          "availability": "Disponível imediatamente"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: bearer
+      token: "{{ _.token_candidate_a }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "\t{{ _.base_url }}/candidates/me/experiences"
+    name: Create Candidate A Experience
+    meta:
+      id: req_fbff8296caf84c0da57d537c91c104de
+      created: 1794410275544
+      modified: 1794410332718
+      isPrivate: false
+      description: ""
+      sortKey: -1794410275544
+    method: POST
+    body:
+      mimeType: application/json
+      text: >
+        
+        {
+          "company_name": "Tech Solutions Angola",
+          "job_title": "Estagiário de Desenvolvimento",
+          "employment_type": "INTERNSHIP",
+          "description": "Participação no desenvolvimento e manutenção de aplicações web.",
+          "city": "Luanda",
+          "country": "Angola",
+          "start_date": "2024-01-15",
+          "end_date": "2025-06-30",
+          "is_current": false
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: bearer
+      token: "{{ _.token_candidate_a }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.base_url }}/candidates/me/experiences"
+    name: List experiences
+    meta:
+      id: req_1eee7258e15a49a7b3f71f5f4bb11b05
+      created: 1794410452224
+      modified: 1794410727013
+      isPrivate: false
+      description: ""
+      sortKey: -1794410452224
+    method: GET
+    authentication:
+      type: bearer
+      token: "{{ _.token_candidate_a }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.base_url }}/candidates/me/experiences/{{ _.experience_id }}"
+    name: PATCH
+    meta:
+      id: req_34a6884ec38a4cd7b1c0c18ce06f3da5
+      created: 1794410750950
+      modified: 1794415032395
+      isPrivate: false
+      description: ""
+      sortKey: -1794410750950
+    method: PATCH
+    body:
+      mimeType: application/json
+      text: |
+        {
+          "job_title": "Programador Júnior"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: bearer
+      token: "{{ _.token_candidate_a }}"
+      prefix: ""
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.base_url }}/candidates/me/educations"
+    name: Create Candidate A Education
+    meta:
+      id: req_58017d616c92437a9b1f1c51919b9c88
+      created: 1794414447523
+      modified: 1794415350141
+      isPrivate: false
+      description: ""
+      sortKey: -1794414447523
+    method: POST
+    body:
+      mimeType: application/json
+      text: >-
+        {
+          "institution": "Universidade Mandume Ya Ndemufayo",
+          "degree": "Licenciatura",
+          "field_of_study": "Engenharia Informática",
+          "description": "Formação superior na área de Tecnologias de Informação.",
+          "city": "Luanda",
+          "country": "Angola",
+          "start_date": "2023-09-01",
+          "end_date": null,
+          "is_current": true
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: bearer
+      token: "{{ _.token_candidate_a }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.base_url }}/candidates/me/educations"
+    name: List academic qualifications
+    meta:
+      id: req_421f2619a6d340f1bfeded3be2cee1fc
+      created: 1794414699120
+      modified: 1794414733358
+      isPrivate: false
+      description: ""
+      sortKey: -1794414699120
+    method: GET
+    authentication:
+      type: bearer
+      token: "{{ _.token_candidate_a }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.base_url }}/candidates/me/educations/{{ _.education_id }}"
+    name: Update Candidate A Education
+    meta:
+      id: req_e4aa527e09fd416e8434b1104f93c8f8
+      created: 1794414806113
+      modified: 1794415222839
+      isPrivate: false
+      description: ""
+      sortKey: -1794414806114
+    method: PATCH
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "degree": "Licenciatura em Engenharia Informática"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: bearer
+      token: "{{ _.token_candidate_a }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.base_url }}/candidates/me/educations"
+    name: Get Candidate A Educations
+    meta:
+      id: req_aa6350bb3e564afb881bb37dffd713b1
+      created: 1794415285414
+      modified: 1794415365235
+      isPrivate: false
+      description: ""
+      sortKey: -1794415285414
+    method: GET
+    authentication:
+      type: bearer
+      token: "{{ _.token_candidate_a }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.base_url }}/candidates/me/educations/{{ _.education_id }}"
+    name: Delete Candidate A Education
+    meta:
+      id: req_c3d3f2780cae4b1c8f26cab582052621
+      created: 1794415431889
+      modified: 1794415509209
+      isPrivate: false
+      description: ""
+      sortKey: -1794415431889
+    method: DELETE
+    authentication:
+      type: bearer
+      token: "{{ _.token_candidate_a }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.base_url }}/candidates/me/skills"
+    name: Create Candidate A Skill
+    meta:
+      id: req_1f2dafc473e34284a661aaf8a93710c1
+      created: 1794463825613
+      modified: 1794513220999
+      isPrivate: false
+      description: ""
+      sortKey: -1794463825613
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "skill_id": "0bac8c13-30ab-427c-8233-bd529a5d0d88",
+          "proficiency": "BEGINNER",
+          "years_experience": 1
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: bearer
+      token: "{{ _.token_candidate_a }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.base_url }}/candidates/me/skills"
+    name: Get Candidate A Skills
+    meta:
+      id: req_4aa249a9e28348f3bf32782c012f4669
+      created: 1794513356433
+      modified: 1794513411549
+      isPrivate: false
+      description: ""
+      sortKey: -1794513356433
+    method: GET
+    authentication:
+      type: bearer
+      token: "{{ _.token_candidate_a }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.base_url }}/candidates/me/skills/{{ _.skill_id }}"
+    name: Update Candidate A Skill
+    meta:
+      id: req_10fb782dac754937b0768b7d3d4ebe7f
+      created: 1794513466564
+      modified: 1794513538891
+      isPrivate: false
+      description: ""
+      sortKey: -1794513466564
+    method: PATCH
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "proficiency": "INTERMEDIATE",
+          "years_experience": 1
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: bearer
+      token: "{{ _.token_candidate_a }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.base_url }}/candidates/me/skills/{{ _.skill_id }}"
+    name: Delete A Candidate Skill
+    meta:
+      id: req_0f5ac180314548d19746cad8a9248a8f
+      created: 1794513783330
+      modified: 1794513966012
+      isPrivate: false
+      description: ""
+      sortKey: -1794513783330
+    method: DELETE
+    authentication:
+      type: bearer
+      token: "{{ _.token_candidate_a }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.base_url }}/candidates/me/visibility"
+    name: Set Candidate A Profile Private
+    meta:
+      id: req_176d1599f90a4daba9ecb419af1c1db7
+      created: 1794514569419
+      modified: 1794514626057
+      isPrivate: false
+      description: ""
+      sortKey: -1794514569419
+    method: PATCH
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "is_public": false
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: bearer
+      token: "{{ _.token_candidate_a }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.base_url }}/candidates/{{ _.candidate_id }}"
+    name: Get Candidate A Public Profile — Private
+    meta:
+      id: req_62864e726ae641518ea1c669f0b0c3f6
+      created: 1794514797511
+      modified: 1794514867400
+      isPrivate: false
+      description: ""
+      sortKey: -1794514797512
+    method: GET
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.base_url }}/candidates/me/visibility"
+    name: Set Candidate A Profile Public
+    meta:
+      id: req_71e23c3126ec4deb8aaa18f954e6da4d
+      created: 1794514946676
+      modified: 1794514996384
+      isPrivate: false
+      description: ""
+      sortKey: -1794514946676
+    method: PATCH
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "is_public": true
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: bearer
+      token: "{{ _.token_candidate_a }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.base_url }}/candidates/me/experiences/{{ _.experience_id }}"
+    name: Delete Candidate A Experience
+    meta:
+      id: req_264dac44df8c460c83637737ce96929f
+      created: 1794515137050
+      modified: 1794515200928
+      isPrivate: false
+      description: ""
+      sortKey: -1794515137050
+    method: DELETE
+    authentication:
+      type: bearer
+      token: "{{ _.token_candidate_a }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_89e3b32e85e1e2c2983f893f49c111d93f4b7700
+    created: 1794406734863
+    modified: 1794514649162
+  cookies:
+    - id: a9d82046-42d0-4214-86c2-64d463c7c32b
+      key: iknow_refresh
+      value: 9ZBsyE0Va2L2BdBewA_soJcz_0S38BYARBlqc_oPUQAidSPnRdaWNwmHyH3WKyLd
+      domain: 127.0.0.1
+      path: /api/v1/auth
+      secure: false
+      httpOnly: true
+      hostOnly: true
+environments:
+  name: Base Environment
+  meta:
+    id: env_89e3b32e85e1e2c2983f893f49c111d93f4b7700
+    created: 1794406734846
+    modified: 1794514679902
+    isPrivate: false
+  data:
+    base_url: http://127.0.0.1:8000/api/v1
+    token_candidate_a: "{{ _.token_candidate_a }}"
+    token_candidate_b: ""
+    candidate_id: 8fa1e8d7-7298-4895-a7a5-bb3bca995ba0
+    experience_id: 6cee8c9f-f9e9-4d9c-9ecd-19115c6750fe
+    education_id: 4f24ad16-f08d-4834-8caa-dac932972fc1
+    skill_id: 0bac8c13-30ab-427c-8233-bd529a5d0d88
