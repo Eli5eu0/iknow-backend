@@ -174,11 +174,11 @@ collection:
         store: true
       rebuildPath: true
   - url: "{{ _.base_url }}/candidates/me/experiences/{{ _.experience_id }}"
-    name: PATCH
+    name: Update Candidate A Experience
     meta:
       id: req_34a6884ec38a4cd7b1c0c18ce06f3da5
       created: 1794410750950
-      modified: 1794415032395
+      modified: 1794518261453
       isPrivate: false
       description: ""
       sortKey: -1794410750950
@@ -268,7 +268,7 @@ collection:
     meta:
       id: req_e4aa527e09fd416e8434b1104f93c8f8
       created: 1794414806113
-      modified: 1794415222839
+      modified: 1794518245810
       isPrivate: false
       description: ""
       sortKey: -1794414806114
