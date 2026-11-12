@@ -29,8 +29,12 @@ class Settings(BaseSettings):
     @model_validator(mode="after")
     def validate_production_security(self):
         if self.app_env.lower() == "production":
-            if len(self.jwt_secret_key) < 32 or self.jwt_secret_key == "development-only-change-me":
-                raise ValueError("JWT_SECRET_KEY must contain at least 32 characters in production")
+            secret = self.jwt_secret_key.strip()
+            placeholder_markers = ("change_me", "change-me", "replace", "example", "development-only")
+            if len(secret) < 32 or any(marker in secret.lower() for marker in placeholder_markers):
+                raise ValueError(
+                    "JWT_SECRET_KEY must be a unique random secret of at least 32 characters in production"
+                )
             if not self.auth_cookie_secure:
                 raise ValueError("AUTH_COOKIE_SECURE must be true in production")
         if self.auth_cookie_samesite == "none" and not self.auth_cookie_secure:
