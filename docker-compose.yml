@@ -6,7 +6,7 @@ services:
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-iknow}
       POSTGRES_USER: ${POSTGRES_USER:-iknow}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-iknow_local_dev}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in your untracked .env file}
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
     volumes:
