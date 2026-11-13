@@ -71,6 +71,24 @@ git diff -- '*.yaml'
 
 O `git diff` não pode mostrar tokens, cookies, palavras-passe nem emails de teste. Não imprimir a saída de `koh cookie list`, que contém o refresh token.
 
+## Guarda anti-credenciais
+
+O Insomnia e o Koh gravam no YAML o que lhes for escrito (ambientes, corpos, cookies). Para impedir que isso chegue ao Git:
+
+- `scripts/check_collections.py` analisa as colecções e recusa JWT, entradas no cookie jar, valores não vazios em variáveis de token, palavra-passe ou segredo, cabeçalhos sensíveis literais e palavras-passe literais em corpos JSON. Emails fora dos domínios reservados geram só um aviso. Nunca imprime os valores, apenas ficheiro, linha, regra e nome da chave.
+- `.githooks/pre-commit` corre o script sobre o que está em stage (não sobre a cópia de trabalho). Activar uma vez por clone:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+- Verificação manual das colecções na raiz: `python scripts/check_collections.py`.
+- Valores de teste inofensivos (entradas inválidas usadas para provocar erros) estão em `scripts/collection_allowed_values.txt`; alterá-lo é uma alteração de segurança e exige revisão.
+- `git commit --no-verify` contorna o hook; só para um falso positivo confirmado, e com autorização.
+- Em Linux e macOS, o hook precisa de permissão de execução (`git update-index --chmod=+x .githooks/pre-commit`). Em Windows não é necessário. O `.gitattributes` mantém fins de linha LF nos hooks.
+
+Para usar credenciais reais no Insomnia, criar um sub-ambiente marcado como privado (não é sincronizado nem exportado) e escolhê-lo ao executar; o ambiente base fica só com marcadores vazios.
+
 ## Análise e relatório
 
 Para cada pedido, comparar `statusCode` e `body` com o contrato do módulo. Falhas resolvem-se corrigindo a implementação, o contrato ou a configuração, e reexecutando; nunca ajustando a expectativa.
@@ -87,6 +105,7 @@ Estados usados nos relatórios:
 
 - No Windows, o Koh 0.4.1 escreve `Assertion failed: !(handle->flags & UV_HANDLE_CLOSING)` no stderr ao terminar. A resposta JSON no stdout está completa e é válida.
 - `koh collection create` gera o ficheiro como `<nome>-wrk_<id>.yaml`; renomear para `<módulo>.yaml` logo a seguir (o Koh continua a reconhecê-lo).
+- Passar sempre `--workspace <COLECÇÃO>` em `request create`, `environment list` e `environment kv ...`. Sem ele, o Koh não restringe a pesquisa a uma colecção; já houve um comando que falhou por isso (pedidos não criados) e outro que apontou para o ambiente de outra colecção. Depois de criar variáveis ou pedidos, confirmar com `koh environment list` e `koh request list` na colecção certa.
 - O Koh não encadeia pedidos nem faz asserções; a ordem, a extracção de valores e a verificação são feitas pela shell e por quem coordena a execução.
 - Variáveis secretas e ambientes de pasta não são suportados pelo Koh.
 - No Insomnia (uso manual), preencher credenciais num sub-ambiente privado, que não é sincronizado nem exportado; nunca no ambiente base.

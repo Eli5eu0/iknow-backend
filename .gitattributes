@@ -1,0 +1,3 @@
+# Os hooks e scripts de shell têm de manter fins de linha LF, mesmo em Windows com autocrlf.
+.githooks/* text eol=lf
+*.sh text eol=lf

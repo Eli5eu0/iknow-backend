@@ -19,6 +19,7 @@ Referências:
 6. Nunca colocar palavras-passe, JWT, refresh tokens, cookies ou conteúdo de `.env` em ficheiros versionados, colecções Insomnia, logs, relatórios ou Notion.
 7. Não desactivar mecanismos de segurança (CSRF, validação de Origin, autenticação) para facilitar testes.
 8. Regras de negócio ficam nos services, não nos routers.
+9. Erros seguem o formato uniforme do contrato §1.1 (`docs/ERRORS.md`). Routers e services levantam `HTTPException`; nunca construir o envelope `{error: ...}` à mão nem devolver `{detail: ...}` por outra via.
 
 ## 2. Fluxo obrigatório por módulo
 
@@ -44,6 +45,9 @@ Um módulo só é dado como concluído com as cinco fases comprovadas. O que nã
 - Tokens e credenciais são passados em tempo de execução (`--auth bearer:<token>`, `--body`), a partir de variáveis da shell que nunca são impressas.
 - Usar contas de teste efémeras criadas na própria execução e desactivadas no fim; nunca contas reais.
 - Depois de cada execução: `koh cookie clear` na colecção e confirmar com `git diff` que nenhum token ficou no YAML.
+
+- Um hook `pre-commit` (`.githooks/pre-commit`, activado com `git config core.hooksPath .githooks`) corre `scripts/check_collections.py --staged` e bloqueia commits com JWT, cookies ou valores não vazios em variáveis de token, palavra-passe ou segredo nas colecções. Nunca usar `--no-verify` sem autorização; nunca acrescentar valores a `scripts/collection_allowed_values.txt` sem autorização. Credenciais reais ficam num sub-ambiente privado do Insomnia, nunca no ambiente base.
+- Antes de qualquer `git add` de colecções, correr `python scripts/check_collections.py`.
 
 Detalhes e comandos em `docs/testing/README.md`.
 

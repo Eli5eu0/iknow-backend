@@ -4,7 +4,7 @@ name: SKILLS
 meta:
   id: wrk_70ef844ac22e8c8dd54b8f78fb0a1dea
   created: 1794555822285
-  modified: 1794556304375
+  modified: 1794565211480
   description: "Catálogo de competências (GET /skills). Sem credenciais: tokens
     passados em tempo de execução."
 collection:
@@ -581,7 +581,7 @@ cookieJar:
   meta:
     id: jar_0479cf7874efd97bbb8def92e0e7c370
     created: 1794556304375
-    modified: 1794556304375
+    modified: 1794565211480
 environments:
   name: Base Environment
   meta:
@@ -591,7 +591,7 @@ environments:
     isPrivate: false
   data:
     base_url: http://127.0.0.1:8000/api/v1
-    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzMDQ4MjA4ZS02YjIxLTQwZTgtOTAxOS1lMmY4ZTAyZGMyZmYiLCJyb2xlIjoiQ0FORElEQVRFIiwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTc5NDU1NzIxNCwiZXhwIjoxNzk0NTU4MTE0LCJqdGkiOiJkS0ItZ0dpYkVDc1d6QTRtUzlUNkdRIn0.8flJeBErxHTs2r5XcBja_XlU7PJuu68oO_DidjEk7yE
+    token: ""
     skill_id: ""
     test_email: ""
     test_password: ""

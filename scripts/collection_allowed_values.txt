@@ -1,0 +1,7 @@
+# Valores de teste inofensivos autorizados nas colecções Insomnia (um por linha).
+# Só valores que NÃO são credenciais reais: entradas inválidas usadas para provocar erros.
+# Qualquer alteração a este ficheiro deve ser revista como uma alteração de segurança.
+short
+not-a-valid-token
+not-the-current-password
+another-long-password-1
