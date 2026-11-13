@@ -1,0 +1,12 @@
+[
+  {"name": "Docker", "slug": "docker", "category": "DEVOPS"},
+  {"name": "FastAPI", "slug": "fastapi", "category": "BACKEND"},
+  {"name": "Git", "slug": "git", "category": "TOOLS"},
+  {"name": "HTML e CSS", "slug": "html-css", "category": "FRONTEND"},
+  {"name": "JavaScript", "slug": "javascript", "category": "PROGRAMMING"},
+  {"name": "PostgreSQL", "slug": "postgresql", "category": "DATABASE"},
+  {"name": "Python", "slug": "python", "category": "PROGRAMMING"},
+  {"name": "React", "slug": "react", "category": "FRONTEND"},
+  {"name": "SQL", "slug": "sql", "category": "DATABASE"},
+  {"name": "TypeScript", "slug": "typescript", "category": "PROGRAMMING"}
+]

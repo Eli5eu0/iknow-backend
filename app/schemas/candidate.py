@@ -4,6 +4,8 @@ from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
+from app.schemas.skill import SkillRead
+
 
 class Proficiency(str, Enum):
     BEGINNER = "BEGINNER"
@@ -37,14 +39,6 @@ class CandidateProfileRead(CandidateProfileFields):
 class CandidateVisibilityUpdate(BaseModel):
     model_config = ConfigDict(extra="forbid")
     is_public: bool
-
-
-class SkillRead(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
-    id: UUID
-    name: str
-    slug: str
-    category: str | None
 
 
 class CandidateSkillCreate(BaseModel):

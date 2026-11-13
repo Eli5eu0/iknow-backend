@@ -1,0 +1,597 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: SKILLS
+meta:
+  id: wrk_70ef844ac22e8c8dd54b8f78fb0a1dea
+  created: 1794555822285
+  modified: 1794556304375
+  description: "Catálogo de competências (GET /skills). Sem credenciais: tokens
+    passados em tempo de execução."
+collection:
+  - url: "{{ _.base_url }}/auth/register"
+    name: Setup - Register Test User
+    meta:
+      id: req_811547b2a4773c5d75ff4326d01c06f5
+      created: 1794555888953
+      modified: 1794555888953
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "email": "{{ _.test_email }}",
+          "password": "{{ _.test_password }}",
+          "role": "CANDIDATE"
+        }
+    headers:
+      - name: Origin
+        value: http://localhost:5173
+      - name: Content-Type
+        value: application/json
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/skills"
+    name: List Skills - Defaults
+    meta:
+      id: req_78524a8226c191940b86e85ebb4e50c8
+      created: 1794555894844
+      modified: 1794555894844
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: GET
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/skills"
+    name: List Skills - Second Page
+    meta:
+      id: req_1e03a5ccfb132bc99a1af8587a4b9865
+      created: 1794555901305
+      modified: 1794555901305
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: GET
+    parameters:
+      - name: page
+        value: "2"
+      - name: page_size
+        value: "3"
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/skills"
+    name: List Skills - Page Beyond End
+    meta:
+      id: req_2f1ee61634375dd3523f15a38d42a36b
+      created: 1794555908716
+      modified: 1794555908716
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: GET
+    parameters:
+      - name: page
+        value: "99"
+      - name: page_size
+        value: "20"
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/skills"
+    name: List Skills - Max Page Size
+    meta:
+      id: req_0b5f855c201827ceebd941c320cfb696
+      created: 1794555915017
+      modified: 1794557324424
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: GET
+    parameters:
+      - name: page_size
+        value: "100"
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/skills"
+    name: List Skills - Search By Name
+    meta:
+      id: req_94b5bb7ad7f03ccce40085bdba3cf515
+      created: 1794555920352
+      modified: 1794555920352
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: GET
+    parameters:
+      - name: q
+        value: SCRIPT
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/skills"
+    name: List Skills - Filter By Category
+    meta:
+      id: req_543c43aa3877937d77ed50f08b5a328e
+      created: 1794555926888
+      modified: 1794555926888
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: GET
+    parameters:
+      - name: category
+        value: DATABASE
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/skills"
+    name: List Skills - Search And Category
+    meta:
+      id: req_d829cc5b27425636c85bd312b2d7fa86
+      created: 1794555932585
+      modified: 1794555932585
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: GET
+    parameters:
+      - name: q
+        value: type
+      - name: category
+        value: PROGRAMMING
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/skills"
+    name: List Skills - Sort Descending
+    meta:
+      id: req_cb5df2bfeb2b3c29633f0ce7be964763
+      created: 1794555938698
+      modified: 1794555938698
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: GET
+    parameters:
+      - name: sort_by
+        value: name
+      - name: sort_order
+        value: desc
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/skills"
+    name: List Skills - No Match
+    meta:
+      id: req_df6c6815362e2e2e3f4fcb1c4a079233
+      created: 1794555945973
+      modified: 1794555945973
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: GET
+    parameters:
+      - name: q
+        value: cobol
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/skills"
+    name: List Skills - Wildcard Is Literal
+    meta:
+      id: req_9a8451bdd12e9e5e0ff40dc4cb0c685d
+      created: 1794555951746
+      modified: 1794555951746
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: GET
+    parameters:
+      - name: q
+        value: "%"
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/skills"
+    name: List Skills - Invalid Page Zero
+    meta:
+      id: req_7140855cfb98136fdab211f8f0ffc672
+      created: 1794555956933
+      modified: 1794555956933
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: GET
+    parameters:
+      - name: page
+        value: "0"
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/skills"
+    name: List Skills - Invalid Page Size Above Max
+    meta:
+      id: req_71ae9215c33de71d2ea86b5cdbbf749f
+      created: 1794555961969
+      modified: 1794555961969
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: GET
+    parameters:
+      - name: page_size
+        value: "101"
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/skills"
+    name: List Skills - Invalid Sort Field
+    meta:
+      id: req_f5592d7beb90cb8107a9e6047d37425b
+      created: 1794555967161
+      modified: 1794555967161
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: GET
+    parameters:
+      - name: sort_by
+        value: slug
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/skills"
+    name: List Skills - Invalid Sort Order
+    meta:
+      id: req_4f23f9db7e11004b3d8522e3486e2608
+      created: 1794555972280
+      modified: 1794555972280
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: GET
+    parameters:
+      - name: sort_order
+        value: up
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/skills"
+    name: List Skills - Invalid Empty Search
+    meta:
+      id: req_c32688212ea3950080d37a74e88883d5
+      created: 1794555977553
+      modified: 1794557305397
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: GET
+    parameters:
+      - name: q
+        value: ""
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/skills"
+    name: List Skills - Without Token
+    meta:
+      id: req_15ae84d4d46f7109012182f048dc8840
+      created: 1794555982507
+      modified: 1794555982507
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: GET
+    authentication:
+      type: none
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/skills"
+    name: List Skills - Invalid Token
+    meta:
+      id: req_9ef1c0577e8306ae56a4ac83fc67620c
+      created: 1794555987747
+      modified: 1794555987747
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: GET
+    authentication:
+      type: bearer
+      token: not-a-valid-token
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/skills/{{ _.skill_id }}"
+    name: Get Skill - Found
+    meta:
+      id: req_5342f56146a7bd5ad9a051cb1817aa74
+      created: 1794555993175
+      modified: 1794555993175
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: GET
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/skills/00000000-0000-4000-8000-000000000000"
+    name: Get Skill - Not Found
+    meta:
+      id: req_f5aad65cf5b11962efe0361ffd84d300
+      created: 1794555998514
+      modified: 1794555998514
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: GET
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/skills/not-a-uuid"
+    name: Get Skill - Invalid UUID
+    meta:
+      id: req_f290cf9203961b4dee7c2186c14d9aa7
+      created: 1794556003578
+      modified: 1794556003578
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: GET
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/skills/00000000-0000-4000-8000-000000000000"
+    name: Get Skill - Without Token
+    meta:
+      id: req_30fefa82872ce3bd3f9d9ec3e0be70d2
+      created: 1794556009951
+      modified: 1794556009951
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: GET
+    authentication:
+      type: none
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/skills"
+    name: Create Skill - Method Not Allowed
+    meta:
+      id: req_102a1ce2383bc7eefd5fcc058dcff48a
+      created: 1794556015333
+      modified: 1794556015333
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: POST
+    body:
+      mimeType: application/json
+      text: '{"name": "X", "slug": "x"}'
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/users/me"
+    name: Cleanup - Deactivate Test User
+    meta:
+      id: req_aeda520ce38048f5aeb96f253de07abc
+      created: 1794556020284
+      modified: 1794556020284
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: DELETE
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_0479cf7874efd97bbb8def92e0e7c370
+    created: 1794556304375
+    modified: 1794556304375
+environments:
+  name: Base Environment
+  meta:
+    id: env_5677e5b40d0257b9e2429e3baa11d43a
+    created: 1794555822759
+    modified: 1794557338151
+    isPrivate: false
+  data:
+    base_url: http://127.0.0.1:8000/api/v1
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzMDQ4MjA4ZS02YjIxLTQwZTgtOTAxOS1lMmY4ZTAyZGMyZmYiLCJyb2xlIjoiQ0FORElEQVRFIiwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTc5NDU1NzIxNCwiZXhwIjoxNzk0NTU4MTE0LCJqdGkiOiJkS0ItZ0dpYkVDc1d6QTRtUzlUNkdRIn0.8flJeBErxHTs2r5XcBja_XlU7PJuu68oO_DidjEk7yE
+    skill_id: ""
+    test_email: ""
+    test_password: ""

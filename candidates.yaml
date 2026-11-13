@@ -4,7 +4,7 @@ name: CANDIDATES
 meta:
   id: wrk_7cc876ea9a5845289fb295ff3b7fa55a
   created: 1794406734814
-  modified: 1794406734814
+  modified: 1794556310224
   description: ""
 collection:
   - url: "{{ _.base_url }}/health"
@@ -30,7 +30,7 @@ collection:
     meta:
       id: req_ed6d559d8a2340a1b214babb47055428
       created: 1794407274152
-      modified: 1794409776318
+      modified: 1794557170523
       isPrivate: false
       description: ""
       sortKey: -1794407274153
@@ -39,8 +39,8 @@ collection:
       mimeType: application/json
       text: |-
         {
-          "email": "eliseu@iknow.com",
-          "password": "eliseucambinda"
+          "email": "{{ _.candidate_a_email }}",
+          "password": "{{ _.candidate_a_password }}"
         }
     headers:
       - name: Origin
@@ -544,11 +544,11 @@ cookieJar:
   meta:
     id: jar_89e3b32e85e1e2c2983f893f49c111d93f4b7700
     created: 1794406734863
-    modified: 1794514649162
+    modified: 1794557214755
   cookies:
-    - id: a9d82046-42d0-4214-86c2-64d463c7c32b
+    - id: c5920578-5e4e-4bc3-8b0c-5f603ed6000e
       key: iknow_refresh
-      value: 9ZBsyE0Va2L2BdBewA_soJcz_0S38BYARBlqc_oPUQAidSPnRdaWNwmHyH3WKyLd
+      value: dY7c6bELG7yuaYCVjXCn74Gjc-tuM6dsAQbwFSEy3MAYAGc1MAF5s2iToPLq7Wws
       domain: 127.0.0.1
       path: /api/v1/auth
       secure: false
@@ -559,13 +559,15 @@ environments:
   meta:
     id: env_89e3b32e85e1e2c2983f893f49c111d93f4b7700
     created: 1794406734846
-    modified: 1794514679902
+    modified: 1794557232726
     isPrivate: false
   data:
     base_url: http://127.0.0.1:8000/api/v1
-    token_candidate_a: "{{ _.token_candidate_a }}"
+    token_candidate_a: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzMDQ4MjA4ZS02YjIxLTQwZTgtOTAxOS1lMmY4ZTAyZGMyZmYiLCJyb2xlIjoiQ0FORElEQVRFIiwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTc5NDU1NzIxNCwiZXhwIjoxNzk0NTU4MTE0LCJqdGkiOiJkS0ItZ0dpYkVDc1d6QTRtUzlUNkdRIn0.8flJeBErxHTs2r5XcBja_XlU7PJuu68oO_DidjEk7yE
     token_candidate_b: ""
     candidate_id: 8fa1e8d7-7298-4895-a7a5-bb3bca995ba0
     experience_id: 6cee8c9f-f9e9-4d9c-9ecd-19115c6750fe
     education_id: 4f24ad16-f08d-4834-8caa-dac932972fc1
     skill_id: 0bac8c13-30ab-427c-8233-bd529a5d0d88
+    candidate_a_email: eliseu@iknow.com
+    candidate_a_password: eliseucambinda
