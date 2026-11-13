@@ -180,7 +180,8 @@ def test_skill_detail(client):
 
     missing = client.get(f"{URL}/{uuid4()}", headers=headers)
     assert missing.status_code == 404
-    assert missing.json() == {"detail": "Skill not found"}
+    error = missing.json()["error"]
+    assert (error["code"], error["message"]) == ("NOT_FOUND", "Skill not found")
 
     assert client.get(f"{URL}/not-a-uuid", headers=headers).status_code == 422
 

@@ -1,5 +1,7 @@
 # Relatório de testes — SKILLS
 
+> Os 32 cenários desta colecção foram reexecutados depois da introdução do formato uniforme de erro (ADR-014); ver `errors.md`. Os resultados abaixo são da execução original, com o formato `{"detail": ...}`.
+
 - **Data de execução:** 2026-11-13
 - **Ambiente:** backend local (`http://127.0.0.1:8000`), PostgreSQL 16 local (Docker) com 10 competências no catálogo, Koh 0.4.1, Node 24.16, Windows
 - **Colecção:** `skills.yaml` (SKILLS), 24 pedidos

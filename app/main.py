@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.v1.router import api_router
 from app.core.config import settings
+from app.core.errors import install_error_handling
 
 
 def create_application() -> FastAPI:
@@ -12,6 +13,9 @@ def create_application() -> FastAPI:
         version="0.1.0",
         description="API backend da plataforma iKnow.",
     )
+    # O tratamento de erros é registado antes do CORS: o CORS fica no exterior e
+    # as respostas de erro, incluindo o 500, recebem os cabeçalhos CORS.
+    install_error_handling(application)
     application.add_middleware(
         CORSMiddleware,
         allow_origins=settings.cors_origin_list,

@@ -1,0 +1,344 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: ERRORS
+meta:
+  id: wrk_55e9ca8674ba9d837f74cdce3c748af6
+  created: 1794564163142
+  modified: 1794565205224
+  description: "Formato de erro uniforme (ADR-014). Sem credenciais: tokens e
+    contas de teste passados em tempo de execução."
+collection:
+  - url: "{{ _.base_url }}/auth/register"
+    name: Setup - Register Test User
+    meta:
+      id: req_7cadadbfe0f079e7414795397e5bb78c
+      created: 1794564522880
+      modified: 1794564522880
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "email": "{{ _.test_email }}",
+          "password": "{{ _.test_password }}",
+          "role": "CANDIDATE"
+        }
+    headers:
+      - name: Origin
+        value: http://localhost:5173
+      - name: Content-Type
+        value: application/json
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/does-not-exist"
+    name: 404 - Unknown Route
+    meta:
+      id: req_252cb28afa04c53ff096541a113e99ea
+      created: 1794564527758
+      modified: 1794564527758
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: GET
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/health"
+    name: 405 - Method Not Allowed
+    meta:
+      id: req_dc3c1ca58a2e48c563b5fed269781675
+      created: 1794564532520
+      modified: 1794564532520
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: POST
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/skills"
+    name: 401 - Skills Without Token
+    meta:
+      id: req_5cda8029dfb39ddceed30232d267490a
+      created: 1794564542765
+      modified: 1794564542765
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: GET
+    authentication:
+      type: none
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/auth/login"
+    name: 403 - Login Without Origin
+    meta:
+      id: req_8e55d4b6060bd19da8054478302d3ba9
+      created: 1794564551301
+      modified: 1794564551301
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "email": "{{ _.test_email }}",
+          "password": "{{ _.test_password }}"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/candidates/me"
+    name: 403 - Candidate Profile As Company
+    meta:
+      id: req_8204eafeb9d52cf7d8be2dd6146d868a
+      created: 1794564560042
+      modified: 1794564560042
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: GET
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/skills/00000000-0000-4000-8000-000000000000"
+    name: 404 - Skill Not Found
+    meta:
+      id: req_30c63f758be1463e36f4c02f630e34db
+      created: 1794564568466
+      modified: 1794564568466
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: GET
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/auth/register"
+    name: 409 - Register Duplicate Email
+    meta:
+      id: req_c87a31d1445aff113abbf1c71d519e19
+      created: 1794564575702
+      modified: 1794564575702
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "email": "{{ _.test_email }}",
+          "password": "{{ _.test_password }}",
+          "role": "CANDIDATE"
+        }
+    headers:
+      - name: Origin
+        value: http://localhost:5173
+      - name: Content-Type
+        value: application/json
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/auth/register"
+    name: 422 - Register Short Password
+    meta:
+      id: req_82cb4d8693a212b34645f37321a99468
+      created: 1794564582595
+      modified: 1794564582595
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "email": "{{ _.test_email }}",
+          "password": "short",
+          "role": "CANDIDATE"
+        }
+    headers:
+      - name: Origin
+        value: http://localhost:5173
+      - name: Content-Type
+        value: application/json
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/skills"
+    name: 422 - Skills Invalid Query Parameter
+    meta:
+      id: req_5c23415808c7067362ca966a18a0b6ab
+      created: 1794564588640
+      modified: 1794564588640
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: GET
+    parameters:
+      - name: page
+        value: "0"
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/skills/not-a-uuid"
+    name: 422 - Skill Invalid UUID
+    meta:
+      id: req_b502e98e03a10bc43e101537f140101c
+      created: 1794564595101
+      modified: 1794564595101
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: GET
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/users/me/password"
+    name: 400 - Change Password Wrong Current
+    meta:
+      id: req_291a5f09893fae98a60714c31d919027
+      created: 1794564600722
+      modified: 1794564600722
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: PATCH
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "current_password": "not-the-current-password",
+          "new_password": "another-long-password-1"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/users/me"
+    name: Cleanup - Deactivate Test User
+    meta:
+      id: req_3deed2c533e89b40f949cc112b82b2bb
+      created: 1794564606741
+      modified: 1794564606741
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: DELETE
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_ed85176928d5c5e7585b12698a334741
+    created: 1794565205223
+    modified: 1794565205223
+environments:
+  name: Base Environment
+  meta:
+    id: env_dabc2b5c3826aa703fff3db0a1087ad9
+    created: 1794564163627
+    modified: 1794564163627
+    isPrivate: false
+  data:
+    base_url: http://127.0.0.1:8000/api/v1
+    token: ""
+    test_email: ""
+    test_password: ""
