@@ -29,7 +29,8 @@ from app.core.security import (
     verify_password,
 )
 from app.db.session import get_db
-from app.models.user import RefreshToken, User
+from app.models.company import Company
+from app.models.user import RefreshToken, User, UserRole
 from app.schemas.auth import AuthResponse, CsrfResponse, LoginRequest, RegisterRequest, UserPublic
 
 router = APIRouter(prefix="/auth")
@@ -127,6 +128,9 @@ def register(
     db.add(user)
     try:
         db.flush()
+        if user.role == UserRole.COMPANY:
+            # D07: o perfil empresarial nasce vazio e é preenchido depois do primeiro login.
+            db.add(Company(user_id=user.id))
         refresh_value, csrf_value = _new_refresh_session(db, user)
         db.commit()
     except IntegrityError as exc:

@@ -1,0 +1,596 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: COMPANIES
+meta:
+  id: wrk_5b0b0074c1144fb8f84a18fc46106bf2
+  created: 1794567364236
+  modified: 1794567904300
+  description: "Perfil empresarial (GET/PATCH /companies/me, GET /companies/{id}).
+    Sem credenciais: tokens, contas e tax_id passados em tempo de execução."
+collection:
+  - url: "{{ _.base_url }}/auth/register"
+    name: Setup - Register Company
+    meta:
+      id: req_d7c30561f3356fa97cc6a5a3bb4051e4
+      created: 1794567413064
+      modified: 1794567413064
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "email": "{{ _.test_email }}",
+          "password": "{{ _.test_password }}",
+          "role": "COMPANY"
+        }
+    headers:
+      - name: Origin
+        value: http://localhost:5173
+      - name: Content-Type
+        value: application/json
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/auth/register"
+    name: Setup - Register Candidate
+    meta:
+      id: req_6901627120c8efc06f2632aec8d4d232
+      created: 1794567418666
+      modified: 1794567418666
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "email": "{{ _.test_email }}",
+          "password": "{{ _.test_password }}",
+          "role": "CANDIDATE"
+        }
+    headers:
+      - name: Origin
+        value: http://localhost:5173
+      - name: Content-Type
+        value: application/json
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/companies/me"
+    name: Get My Company
+    meta:
+      id: req_d1d91f66e17707ea887ed49dcf3e9583
+      created: 1794567423804
+      modified: 1794567423804
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: GET
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/companies/me"
+    name: Update My Company - Name Only
+    meta:
+      id: req_293639936afdb2b111b8a2174b030a3d
+      created: 1794567430687
+      modified: 1794567430687
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: PATCH
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "name": "Empresa de Teste Koh"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/companies/me"
+    name: Update My Company - Complete Profile
+    meta:
+      id: req_c3948beb70769cc60cd2bcb18d84c42e
+      created: 1794567435478
+      modified: 1794567435478
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: PATCH
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "name": "Empresa de Teste Koh",
+          "legal_name": "Empresa de Teste Koh, Lda.",
+          "tax_id": "{{ _.tax_id }}",
+          "description": "Empresa criada pela execução de testes.",
+          "website": "https://example.com",
+          "city": "Luanda",
+          "country": "Angola"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/companies/me"
+    name: Update My Company - Empty Body
+    meta:
+      id: req_38133e7218b5c2c01555933096a1f654
+      created: 1794567440246
+      modified: 1794567440246
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: PATCH
+    body:
+      mimeType: application/json
+      text: "{}"
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/companies/me"
+    name: Update My Company - Null Required Field
+    meta:
+      id: req_ce4d3271856e571fd9a0fd6a232c155d
+      created: 1794567445035
+      modified: 1794567445035
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: PATCH
+    body:
+      mimeType: application/json
+      text: '{"name": null}'
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/companies/me"
+    name: Update My Company - Blank Required Field
+    meta:
+      id: req_f00e1fb16ad4355506b15e3bdf03d579
+      created: 1794567450775
+      modified: 1794567450775
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: PATCH
+    body:
+      mimeType: application/json
+      text: '{"city": "   "}'
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/companies/me"
+    name: Update My Company - Invalid Website
+    meta:
+      id: req_fea95d5ac0ee633ae6c8a0d899fa4f8e
+      created: 1794567455711
+      modified: 1794567455711
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: PATCH
+    body:
+      mimeType: application/json
+      text: '{"website": "example.com"}'
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/companies/me"
+    name: Update My Company - Clear Website
+    meta:
+      id: req_a7ee6a9d990a9fe03cd320cb70ae8eb2
+      created: 1794567460414
+      modified: 1794567460414
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: PATCH
+    body:
+      mimeType: application/json
+      text: '{"website": null}'
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/companies/me"
+    name: Update My Company - Protected Field
+    meta:
+      id: req_7575dc00fd96e8152361e4c5b3a427c6
+      created: 1794567465133
+      modified: 1794567465133
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: PATCH
+    body:
+      mimeType: application/json
+      text: '{"verification_status": "VERIFIED"}'
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/companies/me"
+    name: Update My Company - Unknown Field
+    meta:
+      id: req_7b06373f532d4ccf81a12c0281446715
+      created: 1794567469669
+      modified: 1794567469669
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: PATCH
+    body:
+      mimeType: application/json
+      text: '{"user_id": "00000000-0000-4000-8000-000000000000"}'
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/companies/me"
+    name: Update My Company - Duplicate Tax ID
+    meta:
+      id: req_c6e47006777298d635760ecb1b6cad2c
+      created: 1794567474336
+      modified: 1794567474336
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: PATCH
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "tax_id": "{{ _.tax_id }}"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/companies/me"
+    name: Get My Company - As Candidate
+    meta:
+      id: req_4883ec52b64d4a286a1facbeb6adae75
+      created: 1794567479216
+      modified: 1794567479216
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: GET
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/companies/me"
+    name: Update My Company - As Candidate
+    meta:
+      id: req_b9247eb3f80ca33fad34233491413a41
+      created: 1794567484511
+      modified: 1794567484511
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: PATCH
+    body:
+      mimeType: application/json
+      text: '{"name": "x"}'
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/companies/me"
+    name: Get My Company - Without Token
+    meta:
+      id: req_4aca34fa1bd762368709175e22d0a85b
+      created: 1794567489506
+      modified: 1794567489506
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: GET
+    authentication:
+      type: none
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/companies/me"
+    name: Update My Company - Without Token
+    meta:
+      id: req_1321b49a9a6a709861dff29400cb425a
+      created: 1794567494245
+      modified: 1794567494245
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: PATCH
+    body:
+      mimeType: application/json
+      text: '{"name": "x"}'
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication:
+      type: none
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/companies/{{ _.company_id }}"
+    name: Get Public Company
+    meta:
+      id: req_6324b79f8cc8cc77058e508332ed3c11
+      created: 1794567498997
+      modified: 1794567498997
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: GET
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/companies/00000000-0000-4000-8000-000000000000"
+    name: Get Public Company - Not Found
+    meta:
+      id: req_deefd98db706e78fc8550f6da7fa4ed6
+      created: 1794567503909
+      modified: 1794567503909
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: GET
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/companies/not-a-uuid"
+    name: Get Public Company - Invalid UUID
+    meta:
+      id: req_60f7a199a7ddc23b38a5fbb8945cfe35
+      created: 1794567509032
+      modified: 1794567509032
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: GET
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/companies/00000000-0000-4000-8000-000000000000"
+    name: Get Public Company - Without Token
+    meta:
+      id: req_d41df32e06a49c7ca805dd2326ba7f72
+      created: 1794567514632
+      modified: 1794567514632
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: GET
+    authentication:
+      type: none
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+  - url: "{{ _.base_url }}/users/me"
+    name: Cleanup - Deactivate Test User
+    meta:
+      id: req_bec6de4a32e4a2bab1fe01cba51da7f9
+      created: 1794567519421
+      modified: 1794567519421
+      isPrivate: false
+      description: ""
+      sortKey: 0
+    method: DELETE
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: false
+        store: false
+      rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_fd3a6460010115fe5874e300b1381067
+    created: 1794567904299
+    modified: 1794567904299
+environments:
+  name: Base Environment
+  meta:
+    id: env_f97911274cbc5dc87c2a9c1a22c3a96c
+    created: 1794567364854
+    modified: 1794567364854
+    isPrivate: false
+  data:
+    base_url: http://127.0.0.1:8000/api/v1
+    token: ""
+    test_email: ""
+    test_password: ""
+    tax_id: ""
+    company_id: ""

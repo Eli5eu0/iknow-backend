@@ -19,6 +19,11 @@ class CompanyVerificationStatus(str, enum.Enum):
     SUSPENDED = "SUSPENDED"
 
 
+# Campos que têm de estar preenchidos para o perfil empresarial estar completo (D07).
+# A ordem é a devolvida em `missing_fields`.
+PROFILE_REQUIRED_FIELDS = ("name", "legal_name", "tax_id", "description", "city", "country")
+
+
 class Company(Base):
     __tablename__ = "companies"
 
@@ -26,7 +31,8 @@ class Company(Base):
     user_id: Mapped[uuid.UUID] = mapped_column(
         Uuid(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), unique=True, nullable=False
     )
-    name: Mapped[str] = mapped_column(String(180), nullable=False)
+    # Anulável: a linha é criada vazia no registo e o perfil é preenchido depois.
+    name: Mapped[str | None] = mapped_column(String(180))
     legal_name: Mapped[str | None] = mapped_column(String(220))
     tax_id: Mapped[str | None] = mapped_column(String(80), unique=True)
     description: Mapped[str | None] = mapped_column(Text)
@@ -50,6 +56,18 @@ class Company(Base):
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False
     )
+
+    @property
+    def missing_fields(self) -> list[str]:
+        return [field for field in PROFILE_REQUIRED_FIELDS if not (getattr(self, field) or "").strip()]
+
+    @property
+    def profile_completed(self) -> bool:
+        return not self.missing_fields
+
+    @property
+    def is_verified(self) -> bool:
+        return self.verification_status == CompanyVerificationStatus.VERIFIED
 
     user: Mapped["User"] = relationship("User", back_populates="company")
     opportunities: Mapped[list["Opportunity"]] = relationship(
